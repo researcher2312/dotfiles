@@ -1,0 +1,31 @@
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
+
+set number
+set tabstop=4
+set shiftwidth=4
+set cindent
+set expandtab
+set showmatch
+set ai
+set si
+
+set pastetoggle=<f5>
+set mouse=a
+
+set laststatus=2
+set noshowmode
+
+syntax on
+filetype indent on
+
+augroup RestoreCursor
+     autocmd!
+     autocmd BufReadPost *
+       \ let line = line("'\"")
+       \ | if line >= 1 && line <= line("$") && &filetype !~# 'commit'
+       \      && index(['xxd', 'gitrebase'], &filetype) == -1
+       \ |   execute "normal! g`\""
+       \ | endif
+   augroup END

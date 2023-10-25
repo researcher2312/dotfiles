@@ -1,0 +1,29 @@
+colors:
+    primary:
+        background: '0x1f1f1f'
+        foreground: '0xe5e1d8'
+
+window:
+    padding:
+        x: 5
+        y: 5
+    class:
+        instance: Alacritty
+        general: Alacritty
+    opacity: 0.8
+
+scrolling:
+    history: 10000
+    multipiler: 3
+
+font:
+    draw_bold_text_with_bright_colors: true
+
+selection:
+    save_to_clipboard: true
+
+import:
+    - ~/.config/alacritty/catpuchin.yml
+
+shell:
+    program: /usr/bin/fish

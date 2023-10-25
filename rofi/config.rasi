@@ -1,0 +1,4 @@
+// @theme "/usr/share/rofi/themes/Monokai.rasi"
+configuration {
+    show-icons: true;
+}
