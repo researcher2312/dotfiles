@@ -26,10 +26,12 @@
 
 import os
 import subprocess
-from libqtile import bar, layout, widget, hook, qtile
+from libqtile import bar, layout, hook, qtile
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+from qtile_extras import widget
+from qtile_extras.widget.decorations import PowerLineDecoration
 
 @hook.subscribe.screen_change
 def screen_change(event):
@@ -120,7 +122,11 @@ for i in groups:
     )
 
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
+    layout.Columns(
+        border_focus="#b0d1ed",
+        border_normal="#020385",
+        margin=3,
+        border_width=2),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -136,44 +142,79 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="sans",
+    font="Fira Code",
     fontsize=12,
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
 
-screens = [
-    Screen(
-        top=bar.Bar(
+powerline = {
+        "decorations": [
+            PowerLineDecoration(path="arrow_right")
+        ]
+    }
+powerline_left = {
+        "decorations": [
+            PowerLineDecoration()
+        ]
+    }
+
+mybar = bar.Bar(
             [
-                widget.GroupBox(),
+                widget.GroupBox(background="dddddd80", **powerline_left),
                 widget.Prompt(),
-                widget.WindowName(),
+                widget.WindowName(background="cccccc80", **powerline),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
                     },
                     name_transform=lambda name: name.upper(),
+                    **powerline
                 ),
                 widget.Pomodoro(
                     length_long_break=25,
                     length_short_break=5,
-                    length_pomodori=5,
+                    length_pomodori=20,
                     color_active='F38BA8',
                     color_break='A6E3A1',
                     color_inactive='BAC2DE',
+                    background="aaaaaa80",
+                    **powerline
+                ),
+                widget.CPU(
+                    format='CPU {load_percent}%',
+                    update_interval=5,
+                    background="88888880",
+                    **powerline
+                ),
+                widget.Memory(
+                    format='MEM {MemPercent}%',
+                    update_interval=5,
+                    background = "66666680",
+                    **powerline
+                ),
+                widget.Battery(
+                    format='BAT {percent:2.0%}',
+                    show_short_text = False,
+                    update_interval=60,
+                    background="44444480",
+                    **powerline
                 ),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
-                widget.Systray(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                widget.PulseVolume(),
+                widget.Clock(format="%d/%m %a %H:%M", background="22222288", **powerline),
+                widget.PulseVolume(background="00000088"),
             ],
-            24,
-            border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+            25,
+            background="#80808080",
+            border_width=[0, 0, 0, 0],  # Draw top and bottom borders
             border_color=["000000", "000000", "000000", "000000"]  # Borders are transparent
-        ),
-        # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
+        )
+
+
+screens = [
+    Screen(
+        top=mybar,        # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
         # By default we handle these events delayed to already improve performance, however your system might still be struggling
         # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
         # x11_drag_polling_rate = 60,
@@ -225,3 +266,13 @@ wl_input_rules = None
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
+
+@hook.subscribe.startup
+def _():
+    mybar.window.window.set_property(
+            name="WM_NAME",
+            value="QTILE_BAR",
+            type="STRING",
+            format=8
+            )
+

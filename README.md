@@ -14,3 +14,4 @@ My apps:
 - system information tool: neofetch
 - greeter: lightdm-gtk-greeter
 - status line: powerline
+- calendar: khal
