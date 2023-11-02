@@ -63,7 +63,7 @@ arrow_bar = bar.Bar(
                 ),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
-                widget.PulseVolume(fmt="VLM {}", background="22222288", **powerline),                
+                widget.Volume(fmt="VLM {}", background="22222288", **powerline),
                 widget.Clock(format="%d/%m %a %H:%M", background="00000088"),
             ],
             25,
