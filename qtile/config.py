@@ -28,17 +28,16 @@ import os
 import subprocess
 from libqtile import layout, hook, qtile
 from libqtile.config import Match, Screen
-from keybindings import Keybindings
-from layouts import Layouts
-from groups import Groups
-from widgets import Widget
+from keybindings import keys as my_keys, mouse as my_mouse
+from layouts import layouts as my_layouts
+from groups import groups as my_groups
+from widgets import arrow_bar
 
-myKeys = Keybindings()
-keys = myKeys.init_keys()
-mouse = myKeys.init_mouse()
-layouts = Layouts().init_layouts()
-groups = Groups().init_groups()
-mybar = Widget().get_widget()
+keys = my_keys
+mouse = my_mouse
+layouts = my_layouts
+groups = my_groups
+mybar = arrow_bar
 
 screens = [
     Screen(

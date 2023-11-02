@@ -17,6 +17,7 @@ scrolling:
     multipiler: 3
 
 font:
+    size: 10.0
     draw_bold_text_with_bright_colors: true
     normal:
         family: Fira Code

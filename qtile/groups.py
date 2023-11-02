@@ -1,8 +1,6 @@
 from libqtile.config import Group
 
-class Groups:
-    def __init__(self):
-        self.groups = [Group(i) for i in "123456789"]
+groups = [Group(i) for i in "123456789"]
 
 #        for i in self.groups:
 #            keys.extend(
@@ -27,6 +25,4 @@ class Groups:
                     #     desc="move focused window to group {}".format(i.name)),
 #                ]
 #            )
-    def init_groups(self):
-        return self.groups
 
