@@ -3,10 +3,9 @@ Personal configuration files to use with custom linux installation.
 
 My apps:
 - terminal: Alacritty
-- window manager: QTile
+- window manager: QTile + extras
 - shell: fish
 - text editor: gvim
-- wallpaper manager: nitrogen
 - resource monitor: btop
 - compositor: picom
 - login manager: LightDM
@@ -15,3 +14,4 @@ My apps:
 - greeter: lightdm-gtk-greeter
 - status line: powerline
 - calendar: khal
+- calculator: qualculate

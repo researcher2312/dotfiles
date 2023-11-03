@@ -41,7 +41,9 @@ mybar = arrow_bar
 
 screens = [
     Screen(
-        top=mybar,   
+        top=mybar,
+        wallpaper=os.path.expanduser("~/.config/wallpapers/arch_nz.png"),
+        wallpaper_mode="fill",
         # x11_drag_polling_rate = 60,
     ),
 ]
@@ -75,24 +77,24 @@ auto_minimize = True
 # When using the Wayland backend, this can be used to configure input devices.
 wl_input_rules = None
 
-#only for java toolkit
+# only for java toolkit
 wmname = "LG3D"
+
 
 @hook.subscribe.screen_change
 def screen_change(event):
-    qtile.spawn("nitrogen --restore")
+    #    qtile.spawn("nitrogen --restore")
+    pass
+
 
 @hook.subscribe.startup_once
 def autostart():
-    path = os.path.expanduser('~/.config/qtile/autostart.sh')
-    subprocess.call([path])    
- 
+    path = os.path.expanduser("~/.config/qtile/autostart.sh")
+    subprocess.call([path])
+
+
 @hook.subscribe.startup
 def _():
     mybar.window.window.set_property(
-            name="WM_NAME",
-            value="QTILE_BAR",
-            type="STRING",
-            format=8
-            )
-
+        name="WM_NAME", value="QTILE_BAR", type="STRING", format=8
+    )
