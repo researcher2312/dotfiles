@@ -82,20 +82,14 @@ wl_input_rules = None
 wmname = "LG3D"
 
 
-@hook.subscribe.screen_change
-def screen_change(event):
-    #    qtile.spawn("nitrogen --restore")
-    pass
-
-
 @hook.subscribe.startup_once
 def autostart():
     path = os.path.expanduser("~/.config/qtile/autostart.sh")
     subprocess.call([path])
 
 
-#@hook.subscribe.startup
-#def _():
-#    mybar.window.window.set_property(
-#        name="WM_NAME", value="QTILE_BAR", type="STRING", format=8
-#    )
+@hook.subscribe.startup
+def _():
+    SystemConfigurationValues.system_bar.window.window.set_property(
+        name="WM_NAME", value="QTILE_BAR", type="STRING", format=8
+    )

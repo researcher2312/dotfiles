@@ -2,8 +2,8 @@ from libqtile import bar
 from libqtile.lazy import lazy
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration
-from qtile_extras.popup.toolkit import PopupGridLayout, PopupText
-from themes import ColorGradient
+from qtile_extras.popup.toolkit import PopupGridLayout, PopupText, PopupSlider
+from colortools import ColorGradient
 
 
 widget_defaults = dict(
@@ -23,12 +23,16 @@ class VolumePopup(PopupGridLayout):
     def __init__(self, qtile):
         super().__init__(
             qtile,
-            rows=1,
+            rows=2,
             cols=2,
+            height=50,
+            width=200,
             close_on_click=False,
             controls=[
-                PopupText(name="text", col=0, h_align="center", text="kolumna 0"),
-                PopupText(col=1, h_align="center", text="kolumna 1"),
+                PopupText(col=0, row=0, h_align="center", text="Volume"),
+                PopupSlider(col=1, row=0, max_value=100, marker_size=0, name="volume"),
+                PopupText(col=0, row=1, h_align="center", text="Brightness"),
+                PopupSlider(col=1, row=1, max_value=100, marker_size=0, name="brightness"),
             ],
         )
 
@@ -38,24 +42,30 @@ class SystemConfigurationValues:
     brightness = 0
     volume_popup = None
     system_bar = None
+    popup_visible = False
 
 
 @lazy.function
-def show_volume(qtile):
-    if SystemConfigurationValues.system_bar != None:
-        SystemConfigurationValues.system_bar.update_system_values()
-    if SystemConfigurationValues.volume_popup != None:
-        SystemConfigurationValues.volume_popup.show(centered=True)
-        SystemConfigurationValues.volume_popup.update_controls(
-            text=str(SystemConfigurationValues.volume)
-        )
+def show_popup(qtile):
+    if SystemConfigurationValues.popup_visible == False:
+        if SystemConfigurationValues.system_bar != None:
+            SystemConfigurationValues.system_bar.update_system_values()
+        if SystemConfigurationValues.volume_popup != None:
+            SystemConfigurationValues.popup_visible = True
+            SystemConfigurationValues.volume_popup.show(relative_to=3, relative_to_bar=True)
+            SystemConfigurationValues.volume_popup.update_controls(
+                    volume=SystemConfigurationValues.volume
+            )
+    else:
+        if SystemConfigurationValues.volume_popup != None:
+            SystemConfigurationValues.volume_popup.hide()
+            SystemConfigurationValues.popup_visible = False
+
 
 
 @lazy.function
 def hide_volume(qtile):
-    if SystemConfigurationValues.volume_popup != None:
-        SystemConfigurationValues.volume_popup.hide()
-
+    pass    
 
 class ArrowBar(bar.Bar):
     def __init__(self):
@@ -75,7 +85,7 @@ class ArrowBar(bar.Bar):
         )
         self.launch_popup_text = widget.TextBox(
             text="Launch popup",
-            mouse_callbacks={"Button1": show_volume(), "Button3": hide_volume()},
+            mouse_callbacks={"Button1": show_popup()},
             background=gradient.get_color(),
             **powerline
         )
@@ -129,7 +139,7 @@ class ArrowBar(bar.Bar):
             self.volume_widget,
             self.clock,
         ]
-        super().__init__(widgets, 25, background="#80808080")
+        super().__init__(widgets, 25, background="#80808080", margin=[5,5,1,5])
 
     def update_system_values(self):
         SystemConfigurationValues.volume = self.volume_widget.get_volume()
