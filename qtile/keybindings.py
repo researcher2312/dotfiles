@@ -74,6 +74,7 @@ keys = [
         lazy.spawn("rofi -show calc -modi calc -no-show-match -no-sort"),
         desc="Launch calculator",
     ),
+    Key([mod, "shift"], "l", lazy.spawn("light-locker-command -l"), desc="lock screen"),
 ]
 
 mouse = [

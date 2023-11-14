@@ -5,6 +5,7 @@ from qtile_extras.widget.decorations import PowerLineDecoration
 from qtile_extras.popup.toolkit import PopupGridLayout, PopupText
 from themes import ColorGradient
 
+
 widget_defaults = dict(
     font="Fira Code",
     fontsize=12,
@@ -15,48 +16,70 @@ extension_defaults = widget_defaults.copy()
 powerline = {"decorations": [PowerLineDecoration(path="arrow_right")]}
 powerline_left = {"decorations": [PowerLineDecoration()]}
 
-
 gradient = ColorGradient("ff0000", "00ff00", "80", 9)
 
 
-def show_popup(qtile):
-    test_popup = PopupGridLayout(
-        qtile,
-        rows=1,
-        cols=3,
-        height=50,
-        width=300,
-        background="00000080",
-        hide_on_timeout=2,
-        close_on_click=False,
-        controls=[
-            PopupText(col=0, h_align="center", text="kolumna 0"),
-            PopupText(col=1, h_align="center", text="kolumna 1"),
-            PopupText(col=2, h_align="center", text="kolumna 2"),
-        ],
-    )
-    test_popup.show(relative_to=3, relative_to_bar=True, y=5, x=-5)
+class VolumePopup(PopupGridLayout):
+    def __init__(self, qtile):
+        super().__init__(
+            qtile,
+            rows=1,
+            cols=2,
+            close_on_click=False,
+            controls=[
+                PopupText(name="text", col=0, h_align="center", text="kolumna 0"),
+                PopupText(col=1, h_align="center", text="kolumna 1"),
+            ],
+        )
 
 
-arrow_bar = bar.Bar(
-    [
-        widget.GroupBox(background=gradient.get_color(), **powerline_left),
-        widget.Prompt(),
-        widget.WindowName(background=gradient.get_color(), **powerline),
-        widget.Chord(
+class SystemConfigurationValues:
+    volume = 50
+    brightness = 0
+    volume_popup = None
+    system_bar = None
+
+
+@lazy.function
+def show_volume(qtile):
+    if SystemConfigurationValues.system_bar != None:
+        SystemConfigurationValues.system_bar.update_system_values()
+    if SystemConfigurationValues.volume_popup != None:
+        SystemConfigurationValues.volume_popup.show(centered=True)
+        SystemConfigurationValues.volume_popup.update_controls(
+            text=str(SystemConfigurationValues.volume)
+        )
+
+
+@lazy.function
+def hide_volume(qtile):
+    if SystemConfigurationValues.volume_popup != None:
+        SystemConfigurationValues.volume_popup.hide()
+
+
+class ArrowBar(bar.Bar):
+    def __init__(self):
+        self.group_box = widget.GroupBox(
+            background=gradient.get_color(), **powerline_left
+        )
+        self.prompt = widget.Prompt()
+        self.window_name = widget.WindowName(
+            background=gradient.get_color(), **powerline
+        )
+        self.chords = widget.Chord(
             chords_colors={
                 "launch": ("#ff0000", "#ffffff"),
             },
             name_transform=lambda name: name.upper(),
             **powerline
-        ),
-        widget.TextBox(
+        )
+        self.launch_popup_text = widget.TextBox(
             text="Launch popup",
-            mouse_callbacks={"Button1": lazy.function(show_popup)},
+            mouse_callbacks={"Button1": show_volume(), "Button3": hide_volume()},
             background=gradient.get_color(),
             **powerline
-        ),
-        widget.Pomodoro(
+        )
+        self.pomodoro = widget.Pomodoro(
             length_long_break=25,
             length_short_break=5,
             length_pomodori=20,
@@ -65,33 +88,48 @@ arrow_bar = bar.Bar(
             color_inactive="BAC2DE",
             background=gradient.get_color(),
             **powerline
-        ),
-        widget.CPU(
+        )
+        self.cpu = widget.CPU(
             format="CPU {load_percent}%",
             update_interval=5,
             background=gradient.get_color(),
             **powerline
-        ),
-        widget.Memory(
+        )
+        self.memory = widget.Memory(
             format="MEM {MemPercent}%",
             update_interval=5,
             background=gradient.get_color(),
             **powerline
-        ),
-        widget.Battery(
+        )
+        
+        self.battery = widget.Battery(
             format="BAT {percent:2.0%}",
             show_short_text=False,
             update_interval=60,
             background=gradient.get_color(),
             **powerline
-        ),
-        # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-        # widget.StatusNotifier(),
-        widget.Volume(fmt="VLM {}", background=gradient.get_color(), **powerline),
-        widget.Clock(format="%d/%m %a %H:%M", background=gradient.get_color()),
-    ],
-    25,
-    background="#80808080",
-    border_width=[0, 0, 0, 0],  # Draw top and bottom borders
-    border_color=["000000", "000000", "000000", "000000"],  # Borders are transparent
-)
+        )
+        self.volume_widget = widget.PulseVolume(
+            fmt="VLM {}", background=gradient.get_color(), **powerline
+        )
+
+        self.clock = widget.Clock(
+            format="%d/%m %a %H:%M", background=gradient.get_color()
+        )
+        widgets = [
+            self.group_box,
+            self.prompt,
+            self.window_name,
+            self.chords,
+            self.launch_popup_text,
+            self.pomodoro,
+            self.cpu,
+            self.memory,
+            self.battery,
+            self.volume_widget,
+            self.clock,
+        ]
+        super().__init__(widgets, 25, background="#80808080")
+
+    def update_system_values(self):
+        SystemConfigurationValues.volume = self.volume_widget.get_volume()

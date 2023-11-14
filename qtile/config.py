@@ -31,17 +31,18 @@ from libqtile.config import Match, Screen
 from keybindings import keys as my_keys, mouse as my_mouse
 from layouts import layouts as my_layouts
 from groups import groups as my_groups
-from widgets import arrow_bar
+from widgets import ArrowBar, VolumePopup, SystemConfigurationValues
 
+SystemConfigurationValues.volume_popup = VolumePopup(qtile)
+SystemConfigurationValues.system_bar = ArrowBar()
 keys = my_keys
 mouse = my_mouse
 layouts = my_layouts
 groups = my_groups
-mybar = arrow_bar
 
 screens = [
     Screen(
-        top=mybar,
+        top=SystemConfigurationValues.system_bar,
         wallpaper=os.path.expanduser("~/.config/wallpapers/arch_nz.png"),
         wallpaper_mode="fill",
         # x11_drag_polling_rate = 60,
@@ -93,8 +94,8 @@ def autostart():
     subprocess.call([path])
 
 
-@hook.subscribe.startup
-def _():
-    mybar.window.window.set_property(
-        name="WM_NAME", value="QTILE_BAR", type="STRING", format=8
-    )
+#@hook.subscribe.startup
+#def _():
+#    mybar.window.window.set_property(
+#        name="WM_NAME", value="QTILE_BAR", type="STRING", format=8
+#    )
