@@ -16,7 +16,7 @@ extension_defaults = widget_defaults.copy()
 powerline = {"decorations": [PowerLineDecoration(path="arrow_right")]}
 powerline_left = {"decorations": [PowerLineDecoration()]}
 
-gradient = ColorGradient("ff0000", "00ff00", "80", 9)
+gradient = ColorGradient("a4aab6", "172126", "80", 9)
 
 
 class VolumePopup(PopupGridLayout):
@@ -32,7 +32,9 @@ class VolumePopup(PopupGridLayout):
                 PopupText(col=0, row=0, h_align="center", text="Volume"),
                 PopupSlider(col=1, row=0, max_value=100, marker_size=0, name="volume"),
                 PopupText(col=0, row=1, h_align="center", text="Brightness"),
-                PopupSlider(col=1, row=1, max_value=100, marker_size=0, name="brightness"),
+                PopupSlider(
+                    col=1, row=1, max_value=100, marker_size=0, name="brightness"
+                ),
             ],
         )
 
@@ -52,9 +54,11 @@ def show_popup(qtile):
             SystemConfigurationValues.system_bar.update_system_values()
         if SystemConfigurationValues.volume_popup != None:
             SystemConfigurationValues.popup_visible = True
-            SystemConfigurationValues.volume_popup.show(relative_to=3, relative_to_bar=True)
+            SystemConfigurationValues.volume_popup.show(
+                relative_to=3, relative_to_bar=True
+            )
             SystemConfigurationValues.volume_popup.update_controls(
-                    volume=SystemConfigurationValues.volume
+                volume=SystemConfigurationValues.volume
             )
     else:
         if SystemConfigurationValues.volume_popup != None:
@@ -62,10 +66,10 @@ def show_popup(qtile):
             SystemConfigurationValues.popup_visible = False
 
 
-
 @lazy.function
 def hide_volume(qtile):
-    pass    
+    pass
+
 
 class ArrowBar(bar.Bar):
     def __init__(self):
@@ -111,7 +115,6 @@ class ArrowBar(bar.Bar):
             background=gradient.get_color(),
             **powerline
         )
-        
         self.battery = widget.Battery(
             format="BAT {percent:2.0%}",
             show_short_text=False,
@@ -122,7 +125,6 @@ class ArrowBar(bar.Bar):
         self.volume_widget = widget.PulseVolume(
             fmt="VLM {}", background=gradient.get_color(), **powerline
         )
-
         self.clock = widget.Clock(
             format="%d/%m %a %H:%M", background=gradient.get_color()
         )
@@ -139,7 +141,8 @@ class ArrowBar(bar.Bar):
             self.volume_widget,
             self.clock,
         ]
-        super().__init__(widgets, 25, background="#80808080", margin=[5,5,1,5])
+        super().__init__(widgets, 25, background="#80808080", margin=[5, 5, 1, 5])
 
     def update_system_values(self):
         SystemConfigurationValues.volume = self.volume_widget.get_volume()
+
