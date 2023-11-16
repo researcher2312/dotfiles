@@ -7,7 +7,7 @@ from colortools import ColorGradient
 
 
 widget_defaults = dict(
-    font="Fira Code",
+    font="FiraCode Nerd Font",
     fontsize=12,
     padding=3,
 )
@@ -104,26 +104,26 @@ class ArrowBar(bar.Bar):
             **powerline
         )
         self.cpu = widget.CPU(
-            format="CPU {load_percent}%",
+            format="\uf4bc   {load_percent}%",
             update_interval=5,
             background=gradient.get_color(),
             **powerline
         )
         self.memory = widget.Memory(
-            format="MEM {MemPercent}%",
+            format="\uf2db   {MemPercent}%",
             update_interval=5,
             background=gradient.get_color(),
             **powerline
         )
         self.battery = widget.Battery(
-            format="BAT {percent:2.0%}",
+            format="\uf240    {percent:2.0%}",
             show_short_text=False,
             update_interval=60,
             background=gradient.get_color(),
             **powerline
         )
         self.volume_widget = widget.PulseVolume(
-            fmt="VLM {}", background=gradient.get_color(), **powerline
+            fmt="\uf028   {}", background=gradient.get_color(), **powerline
         )
         self.clock = widget.Clock(
             format="%d/%m %a %H:%M", background=gradient.get_color()
