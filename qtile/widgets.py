@@ -19,6 +19,7 @@ powerline_left = {"decorations": [PowerLineDecoration()]}
 
 class VolumePopup(PopupGridLayout):
     def __init__(self, qtile):
+        self.is_visible = False
         super().__init__(
             qtile,
             rows=2,
@@ -48,36 +49,33 @@ class VolumePopup(PopupGridLayout):
             ],
         )
 
-
-class SystemConfigurationValues:
-    volume = 50
-    brightness = 0
-    volume_popup = None
-    system_bar = None
-    popup_visible = False
+#class SystemConfigurationValues:
+#    volume = 50
+#    brightness = 0
+#    volume_popup = None
+#    system_bar = None
+#    popup_visible = False
 
 
 @lazy.function
 def show_popup(qtile):
-    if SystemConfigurationValues.popup_visible == False:
-        if SystemConfigurationValues.system_bar != None:
-            SystemConfigurationValues.system_bar.update_system_values()
-        if SystemConfigurationValues.volume_popup != None:
-            SystemConfigurationValues.popup_visible = True
-            SystemConfigurationValues.volume_popup.show(
-                relative_to=3, relative_to_bar=True
-            )
-            SystemConfigurationValues.volume_popup.update_controls(
-                volume=SystemConfigurationValues.volume
-            )
+    bar = qtile.screens[0].top
+    if bar.popup == None:
+        bar.popup = VolumePopup(qtile)
+    popup = bar.popup
+    if popup.is_visible:
+        popup.is_visible = False
+        popup.hide()
     else:
-        if SystemConfigurationValues.volume_popup != None:
-            SystemConfigurationValues.volume_popup.hide()
-            SystemConfigurationValues.popup_visible = False
-
+        popup.is_visible = True
+        popup.show(relative_to=3, relative_to_bar=True, x=-3, y=5)
+        popup.popup.win.keep_above(True)
+        popup.popup.win.move_to_top()
+        popup.update_controls(volume=bar.get_volume())
 
 class ArrowBar(bar.Bar):
     def __init__(self, gradient):
+        self.popup = None
         self.group_box = widget.GroupBox(
             background=gradient.get_color(), **powerline_left
         )
@@ -130,12 +128,12 @@ class ArrowBar(bar.Bar):
         self.volume_widget = widget.PulseVolume(
             fmt="{}",
             emoji=True,
-            emoji_list=['󰸈', '󰕿', '󰖀', '󰕾'],
+            emoji_list=["󰸈", "󰕿", "󰖀", "󰕾"],
             fontsize=18,
             background=gradient.get_color(),
             **powerline
         )
-        self.volume_popup = widget.PulseVolumeExtra(mode="popup")
+        #self.volume_popup = widget.PulseVolumeExtra(mode="popup")
         self.clock = widget.Clock(
             format="%d/%m %a %H:%M", background=gradient.get_color()
         )
@@ -150,10 +148,10 @@ class ArrowBar(bar.Bar):
             self.memory,
             self.battery,
             self.volume_widget,
-            self.volume_popup,
+            #self.volume_popup,
             self.clock,
         ]
         super().__init__(widgets, 25, background="#80808080", margin=[5, 5, 1, 5])
 
-    def update_system_values(self):
-        SystemConfigurationValues.volume = self.volume_widget.get_volume()
+    def get_volume(self):
+        return self.volume_widget.get_volume()

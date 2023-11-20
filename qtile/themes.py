@@ -2,9 +2,9 @@ import abc
 from widgets import SystemConfigurationValues
 import json
 
+
 class QtileTheme:
-    def __init__(self, qtile, sysConfig):
-        self.qtile_handle = qtile
+    def __init__(self):
         self.wallpaper_path = None
         self.rofi_theme_path = None
         self.font_name = None
@@ -12,13 +12,11 @@ class QtileTheme:
         self.status_popup = None
         self.light_colors = {}
         self.dark_colors = {}
-        self.sysConfig = sysConfig
+        self.name = None
 
     def apply_theme(self):
-        self.sysConfig.wallpaper = self.wallpaper_path
-        self.sysConfig.volume_popup = self.status_popup
-        self.sysConfig.system_bar = self.status_bar
-
+        pass
+    
     def set_wallpaper(self, wallpaper):
         self.wallpaper_path = wallpaper
 
