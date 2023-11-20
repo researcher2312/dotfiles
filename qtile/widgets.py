@@ -16,8 +16,6 @@ extension_defaults = widget_defaults.copy()
 powerline = {"decorations": [PowerLineDecoration(path="arrow_right")]}
 powerline_left = {"decorations": [PowerLineDecoration()]}
 
-gradient = ColorGradient("a4aab6", "172126", "80", 9)
-
 
 class VolumePopup(PopupGridLayout):
     def __init__(self, qtile):
@@ -78,13 +76,8 @@ def show_popup(qtile):
             SystemConfigurationValues.popup_visible = False
 
 
-@lazy.function
-def hide_volume(qtile):
-    pass
-
-
 class ArrowBar(bar.Bar):
-    def __init__(self):
+    def __init__(self, gradient):
         self.group_box = widget.GroupBox(
             background=gradient.get_color(), **powerline_left
         )

@@ -1,3 +1,6 @@
+from math import modf
+
+
 class RGB:
     def __init__(self, r: int = 0, g: int = 0, b: int = 0):
         self.red = r
@@ -32,7 +35,9 @@ class RGB:
 
     def __mul__(self, multiplier):
         return RGB(
-            self.red * multiplier, self.green * multiplier, self.blue * multiplier
+            int(self.red * multiplier),
+            int(self.green * multiplier),
+            int(self.blue * multiplier),
         )
 
     def __str__(self):
@@ -40,19 +45,22 @@ class RGB:
 
 
 class ColorGradient:
-    def __init__(self, start_color, end_color, transparency, shades_count):
-        self.start_color = RGB.fromstring(start_color)
-        self.end_color = RGB.fromstring(end_color)
+    def __init__(self, input_colors, shades_count, transparency="ff"):
+        new_colors = []
+        [new_colors.append(RGB.fromstring(color)) for color in input_colors]
         self.transparency = transparency
         self.calls = -1
-        self.color_difference = (self.end_color - self.start_color) / (shades_count - 1)
+        distance = (len(input_colors) - 1) / (shades_count - 1)
+        self.colors = []
+        for i in range(0, shades_count - 1):
+            frac_color, int_color = modf(i * distance)
+            starting_color = new_colors[int(int_color)]
+            ending_color = new_colors[int(int_color) + 1]
+            self.colors.append(
+                starting_color + (ending_color - starting_color) * frac_color
+            )
+        self.colors.append(new_colors[-1])
 
     def get_color(self):
         self.calls += 1
-        return (
-            str(self.start_color + self.color_difference * (self.calls))
-            + self.transparency
-        )
-
-
-
+        return str(self.colors[self.calls]) + self.transparency
