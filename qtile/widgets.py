@@ -30,10 +30,22 @@ class VolumePopup(PopupGridLayout):
             close_on_click=False,
             controls=[
                 PopupText(col=0, row=0, h_align="center", text="Volume"),
-                PopupSlider(col=1, row=0, max_value=100, marker_size=0, name="volume"),
+                PopupSlider(
+                    col=1,
+                    row=0,
+                    max_value=100,
+                    marker_size=0,
+                    bar_size=10,
+                    name="volume",
+                ),
                 PopupText(col=0, row=1, h_align="center", text="Brightness"),
                 PopupSlider(
-                    col=1, row=1, max_value=100, marker_size=0, name="brightness"
+                    col=1,
+                    row=1,
+                    max_value=100,
+                    marker_size=0,
+                    bar_size=10,
+                    name="brightness",
                 ),
             ],
         )
@@ -123,8 +135,14 @@ class ArrowBar(bar.Bar):
             **powerline
         )
         self.volume_widget = widget.PulseVolume(
-            fmt="\uf028   {}", background=gradient.get_color(), **powerline
+            fmt="{}",
+            emoji=True,
+            emoji_list=['󰸈', '󰕿', '󰖀', '󰕾'],
+            fontsize=18,
+            background=gradient.get_color(),
+            **powerline
         )
+        self.volume_popup = widget.PulseVolumeExtra(mode="popup")
         self.clock = widget.Clock(
             format="%d/%m %a %H:%M", background=gradient.get_color()
         )
@@ -139,10 +157,10 @@ class ArrowBar(bar.Bar):
             self.memory,
             self.battery,
             self.volume_widget,
+            self.volume_popup,
             self.clock,
         ]
         super().__init__(widgets, 25, background="#80808080", margin=[5, 5, 1, 5])
 
     def update_system_values(self):
         SystemConfigurationValues.volume = self.volume_widget.get_volume()
-

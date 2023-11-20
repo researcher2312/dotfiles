@@ -75,6 +75,11 @@ keys = [
         desc="Launch calculator",
     ),
     Key([mod, "shift"], "x", lazy.spawn("light-locker-command -l"), desc="lock screen"),
+    Key([], "XF86AudioRaiseVolume", lazy.widget["pulsevolume"].increase_vol(), desc="Raise Volume"),
+    Key([], "XF86AudioLowerVolume", lazy.widget["pulsevolume"].decrease_vol(), desc="Lower Volume"),
+    Key([], "XF86AudioMute", lazy.widget["pulsevolume"].mute(), desc="Mute"),
+    #Key([], "XF86MonBrightnessUp", pass, desc="Brightness up"),
+    #Key([], "XF86MonBrightnessDown", pass, desc="Brightness down"),
 ]
 
 mouse = [
