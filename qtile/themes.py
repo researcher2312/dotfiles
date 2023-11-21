@@ -31,8 +31,10 @@ class QtileTheme:
         else:
             self.group_labels = group_labels
 
-    def apply_theme(self):
-        pass
+    def apply_theme(self, qtile):
+        defaults = dict(font="FiraCode Nerd Font", fontsize=12, padding=3, foreground=self.dark_colors["white"])
+        qtile.config.widget_defaults = defaults
+        qtile.config.extension_defaults = defaults.copy()
 
     def set_wallpaper(self, wallpaper):
         self.wallpaper_path = wallpaper

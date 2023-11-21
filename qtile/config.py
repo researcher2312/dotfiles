@@ -35,6 +35,7 @@ from theming import BlueyTheme
 
 
 myTheme = BlueyTheme()
+myTheme.apply_theme(qtile)
 myGroups = CustomGroups(myTheme.group_names, myTheme.group_labels)
 myKeys = CustomKeys()
 keys = myKeys.keys
@@ -48,7 +49,7 @@ myGroups.extend_keys(myKeys)
 screens = [
     Screen(
         top=myTheme.bar,
-        wallpaper=os.path.expanduser("~/.config/wallpapers/arch_nz.png"),
+        wallpaper=myTheme.wallpaper_path,
         wallpaper_mode="fill",
         # x11_drag_polling_rate = 60,
     ),

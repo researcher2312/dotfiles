@@ -67,12 +67,6 @@ def show_popup(qtile):
 
 class ArrowBar(bar.Bar):
     def __init__(self, gradient, colors):
-        widget_defaults = dict(
-            font="FiraCode Nerd Font",
-            foreground=colors["red"],
-            fontsize=30,
-            padding=3,
-        )
         extension_defaults = widget_defaults.copy()
         self.popup = None
         self.group_box = widget.GroupBox(
@@ -115,19 +109,19 @@ class ArrowBar(bar.Bar):
             **powerline
         )
         self.cpu = widget.CPU(
-            format="\uf4bc   {load_percent}%",
+            format="\uf4bc  {load_percent}%",
             update_interval=5,
             background=gradient.get_color(),
             **powerline
         )
         self.memory = widget.Memory(
-            format="\uf2db   {MemPercent}%",
+            format="\uf2db  {MemPercent}%",
             update_interval=5,
             background=gradient.get_color(),
             **powerline
         )
         self.battery = widget.Battery(
-            format="\uf240    {percent:2.0%}",
+            format="\uf240  {percent:2.0%}",
             show_short_text=False,
             update_interval=60,
             background=gradient.get_color(),
@@ -146,7 +140,7 @@ class ArrowBar(bar.Bar):
         )
         #self.volume_popup = widget.PulseVolumeExtra(mode="popup")
         self.clock = widget.Clock(
-            format="\U000f0954   %d/%m %a %H:%M", background=gradient.get_color()
+            format="\U000f0954  %d/%m %a %H:%M", background=gradient.get_color()
         )
         widgets = [
             self.group_box,
