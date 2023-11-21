@@ -28,20 +28,22 @@ import os
 import subprocess
 from libqtile import layout, hook, qtile
 from libqtile.config import Match, Screen
-from keybindings import keys as my_keys, mouse as my_mouse
+from keybindings import CustomKeys
 from layouts import layouts as my_layouts
-from groups import groups as my_groups
-from widgets import ArrowBar, VolumePopup
+from groups import CustomGroups
 from theming import BlueyTheme
 
 
 myTheme = BlueyTheme()
-keys = my_keys
-mouse = my_mouse
+myGroups = CustomGroups(myTheme.group_names, myTheme.group_labels)
+myKeys = CustomKeys()
+keys = myKeys.keys
+mouse = myKeys.mouse
 layouts = my_layouts
-groups = my_groups
+groups = myGroups.groups
 
-myTheme.apply_theme()
+myGroups.extend_keys(myKeys)
+
 
 screens = [
     Screen(

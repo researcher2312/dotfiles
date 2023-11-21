@@ -1,28 +1,32 @@
-from libqtile.config import Group
+from libqtile.config import Group, Key
+from libqtile.lazy import lazy
 
-groups = [Group(i) for i in "123456789"]
 
-#        for i in self.groups:
-#            keys.extend(
-#                [
+class CustomGroups:
+    def __init__(self, names, labels):
+        self.groups = []
+        for i in range(0, len(names)):
+            self.groups.append(Group(name=names[i], label=labels[i]))
+
+    def extend_keys(self, CustomKeys):
+        for i in self.groups:
+            CustomKeys.keys.extend(
+                [
                     # mod1 + letter of group = switch to group
-#                    Key(
-#                        [mod],
-#                        i.name,
-#                        lazy.group[i.name].toscreen(),
-#                        desc="Switch to group {}".format(i.name),
-#                    ),
+                    Key(
+                        [CustomKeys.mod],
+                        i.name,
+                        lazy.group[i.name].toscreen(),
+                        desc="Switch to group {}".format(i.name),
+                    ),
                     # mod1 + shift + letter of group = switch to & move focused window to group
-#                    Key(
-#                        [mod, "shift"],
-#                        i.name,
-#                        lazy.window.togroup(i.name, switch_group=True),
-#                        desc="Switch to & move focused window to group {}".format(i.name),
-#                    ),
-                    # Or, use below if you prefer not to switch to that group.
-                    # # mod1 + shift + letter of group = move focused window to group
-                    # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-                    #     desc="move focused window to group {}".format(i.name)),
-#                ]
-#            )
-
+                    Key(
+                        [CustomKeys.mod, "shift"],
+                        i.name,
+                        lazy.window.togroup(i.name, switch_group=True),
+                        desc="Switch to & move focused window to group {}".format(
+                            i.name
+                        ),
+                    ),
+                ]
+            )

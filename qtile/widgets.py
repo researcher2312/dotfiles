@@ -49,14 +49,6 @@ class VolumePopup(PopupGridLayout):
             ],
         )
 
-#class SystemConfigurationValues:
-#    volume = 50
-#    brightness = 0
-#    volume_popup = None
-#    system_bar = None
-#    popup_visible = False
-
-
 @lazy.function
 def show_popup(qtile):
     bar = qtile.screens[0].top
@@ -74,7 +66,14 @@ def show_popup(qtile):
         popup.update_controls(volume=bar.get_volume())
 
 class ArrowBar(bar.Bar):
-    def __init__(self, gradient):
+    def __init__(self, gradient, colors):
+        widget_defaults = dict(
+            font="FiraCode Nerd Font",
+            foreground=colors["red"],
+            fontsize=30,
+            padding=3,
+        )
+        extension_defaults = widget_defaults.copy()
         self.popup = None
         self.group_box = widget.GroupBox(
             background=gradient.get_color(), **powerline_left
@@ -90,6 +89,10 @@ class ArrowBar(bar.Bar):
             name_transform=lambda name: name.upper(),
             **powerline
         )
+        self.notifier = widget.Notify(
+            background=gradient.get_color(),
+            **powerline
+        )
         self.launch_popup_text = widget.TextBox(
             text="Launch popup",
             mouse_callbacks={"Button1": show_popup()},
@@ -100,9 +103,14 @@ class ArrowBar(bar.Bar):
             length_long_break=25,
             length_short_break=5,
             length_pomodori=20,
-            color_active="F38BA8",
-            color_break="A6E3A1",
-            color_inactive="BAC2DE",
+            prefix_inactive="\ue001",#pomodoro-done
+            prefix_paused="\ue004",#pomodoro-squashed
+            prefix_active="\ue003  ",#pomodoro-ticking
+            prefix_break="\ue005",#pomodoro-short_pause
+            prefix_long_break="\ue006",#pomodoro-long_pause
+            color_break=colors["yellow"],
+            color_active=colors["bright red"],
+            color_inactive=colors["white"],
             background=gradient.get_color(),
             **powerline
         )
@@ -128,20 +136,24 @@ class ArrowBar(bar.Bar):
         self.volume_widget = widget.PulseVolume(
             fmt="{}",
             emoji=True,
-            emoji_list=["󰸈", "󰕿", "󰖀", "󰕾"],
+            emoji_list=["\U000f0e08",#volume_variant_off
+                        "\U000f057f",#volume_low
+                        "\U000f0580",#volume_medium
+                        "\U000f057e"],#volume_high
             fontsize=18,
             background=gradient.get_color(),
             **powerline
         )
         #self.volume_popup = widget.PulseVolumeExtra(mode="popup")
         self.clock = widget.Clock(
-            format="%d/%m %a %H:%M", background=gradient.get_color()
+            format="\U000f0954   %d/%m %a %H:%M", background=gradient.get_color()
         )
         widgets = [
             self.group_box,
             self.prompt,
             self.window_name,
             self.chords,
+            self.notifier,
             self.launch_popup_text,
             self.pomodoro,
             self.cpu,
@@ -151,7 +163,7 @@ class ArrowBar(bar.Bar):
             #self.volume_popup,
             self.clock,
         ]
-        super().__init__(widgets, 25, background="#80808080", margin=[5, 5, 1, 5])
+        super().__init__(widgets, 25, background="#00000000", margin=[5, 5, 1, 5])
 
     def get_volume(self):
         return self.volume_widget.get_volume()

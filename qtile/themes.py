@@ -1,22 +1,39 @@
-import abc
-from widgets import SystemConfigurationValues
+import abc, json, yaml
 import json
 
 
 class QtileTheme:
-    def __init__(self):
-        self.wallpaper_path = None
-        self.rofi_theme_path = None
-        self.font_name = None
-        self.status_bar = None
-        self.status_popup = None
+    def __init__(
+        self,
+        name,
+        theme,
+        font,
+        wallpaper,
+        group_names=None,
+        group_labels=None,
+        rofi=None,
+    ):
+        self.name = name
+        self.font_name = font
+        self.wallpaper_path = wallpaper
+        self.rofi_theme_path = rofi
         self.light_colors = {}
         self.dark_colors = {}
-        self.name = None
+        self.load_colors(theme)
+        self.status_bar = None
+        self.status_popup = None
+        if group_names == None:
+            self.group_names = "123456789"
+        else:
+            self.group_names = group_names
+        if group_labels == None:
+            self.group_labels = "123456789"
+        else:
+            self.group_labels = group_labels
 
     def apply_theme(self):
         pass
-    
+
     def set_wallpaper(self, wallpaper):
         self.wallpaper_path = wallpaper
 
