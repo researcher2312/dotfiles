@@ -1,20 +1,10 @@
+import copy
 from libqtile import bar
 from libqtile.lazy import lazy
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration
 from qtile_extras.popup.toolkit import PopupGridLayout, PopupText, PopupSlider
 from colortools import ColorGradient
-
-
-widget_defaults = dict(
-    font="FiraCode Nerd Font",
-    fontsize=12,
-    padding=3,
-)
-extension_defaults = widget_defaults.copy()
-
-powerline = {"decorations": [PowerLineDecoration(path="arrow_right")]}
-powerline_left = {"decorations": [PowerLineDecoration()]}
 
 
 class VolumePopup(PopupGridLayout):
@@ -49,6 +39,7 @@ class VolumePopup(PopupGridLayout):
             ],
         )
 
+
 @lazy.function
 def show_popup(qtile):
     bar = qtile.screens[0].top
@@ -65,15 +56,81 @@ def show_popup(qtile):
         popup.popup.win.move_to_top()
         popup.update_controls(volume=bar.get_volume())
 
+class SlashBar(bar.Bar):
+    def __init__(self, gradient, colors):
+        powerline = {"decorations": [PowerLineDecoration(path="forward_slash")]}
+        self.spacer = widget.Spacer(
+            length=10,
+            background="1d1a2f",
+            **powerline
+        )
+        self.spacer2 = widget.Spacer(length=10, background="1d1a2f")
+        self.group_box = widget.GroupBox(
+            font="Noto Sans CJK JP Bold",
+            active=colors["bright green"],
+            inactive=colors["bright red"],
+            background=gradient.get_color(),
+            **powerline
+        )
+        self.window_name = widget.WindowName(
+            max_chars=100,
+            background=gradient.get_color(),
+            **powerline
+        )
+        self.battery = widget.Battery(
+            format="\uf240  {percent:2.0%}",
+            show_short_text=False,
+            update_interval=60,
+            background=gradient.get_color(),
+            **powerline
+        )
+        self.volume_widget = widget.PulseVolume(
+            fmt="{}",
+            emoji=True,
+            emoji_list=[
+                "\U000f0e08",  # volume_variant_off
+                "\U000f057f",  # volume_low
+                "\U000f0580",  # volume_medium
+                "\U000f057e",
+            ],  # volume_high
+            fontsize=18,
+            background=gradient.get_color(),
+            **powerline
+        )
+        self.clock = widget.Clock(
+            format="\U000f0954  %d/%m %a %H:%M", background=gradient.get_color(), **powerline
+        )
+        widgets = [
+            self.spacer,
+            self.group_box,
+            copy.copy(self.spacer),
+            self.window_name,
+            copy.copy(self.spacer),
+            self.battery,
+            copy.copy(self.spacer),
+            self.volume_widget,
+            copy.copy(self.spacer),
+            self.clock,
+            self.spacer2,
+        ]
+        super().__init__(widgets, 25, background="#00000000")
+
+
+
 class ArrowBar(bar.Bar):
     def __init__(self, gradient, colors):
-        extension_defaults = widget_defaults.copy()
+        powerline = {"decorations": [PowerLineDecoration(path="arrow_right")]}
+        powerline_left = {"decorations": [PowerLineDecoration()]}
         self.popup = None
         self.group_box = widget.GroupBox(
-            background=gradient.get_color(), **powerline_left
+            active=colors["white"],
+            inactive=colors["cyan"],
+            background=gradient.get_color(),
+            **powerline_left
         )
         self.prompt = widget.Prompt()
         self.window_name = widget.WindowName(
+            max_chars=100,
             background=gradient.get_color(), **powerline
         )
         self.chords = widget.Chord(
@@ -97,13 +154,13 @@ class ArrowBar(bar.Bar):
             length_long_break=25,
             length_short_break=5,
             length_pomodori=20,
-            prefix_inactive="\ue001",#pomodoro-done
-            prefix_paused="\ue004",#pomodoro-squashed
-            prefix_active="\ue003  ",#pomodoro-ticking
-            prefix_break="\ue005",#pomodoro-short_pause
-            prefix_long_break="\ue006",#pomodoro-long_pause
+            prefix_inactive="\ue001",  # pomodoro-done
+            prefix_paused="\ue004",  # pomodoro-squashed
+            prefix_active="\ue003  ",  # pomodoro-ticking
+            prefix_break="\ue005",  # pomodoro-short_pause
+            prefix_long_break="\ue006",  # pomodoro-long_pause
             color_break=colors["yellow"],
-            color_active=colors["bright red"],
+            color_active=colors["red"],
             color_inactive=colors["white"],
             background=gradient.get_color(),
             **powerline
@@ -130,15 +187,17 @@ class ArrowBar(bar.Bar):
         self.volume_widget = widget.PulseVolume(
             fmt="{}",
             emoji=True,
-            emoji_list=["\U000f0e08",#volume_variant_off
-                        "\U000f057f",#volume_low
-                        "\U000f0580",#volume_medium
-                        "\U000f057e"],#volume_high
+            emoji_list=[
+                "\U000f0e08",  # volume_variant_off
+                "\U000f057f",  # volume_low
+                "\U000f0580",  # volume_medium
+                "\U000f057e",
+            ],  # volume_high
             fontsize=18,
             background=gradient.get_color(),
             **powerline
         )
-        #self.volume_popup = widget.PulseVolumeExtra(mode="popup")
+        # self.volume_popup = widget.PulseVolumeExtra(mode="popup")
         self.clock = widget.Clock(
             format="\U000f0954  %d/%m %a %H:%M", background=gradient.get_color()
         )
@@ -154,7 +213,7 @@ class ArrowBar(bar.Bar):
             self.memory,
             self.battery,
             self.volume_widget,
-            #self.volume_popup,
+            # self.volume_popup,
             self.clock,
         ]
         super().__init__(widgets, 25, background="#00000000", margin=[5, 5, 1, 5])

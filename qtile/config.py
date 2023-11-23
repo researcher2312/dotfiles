@@ -31,10 +31,10 @@ from libqtile.config import Match, Screen
 from keybindings import CustomKeys
 from layouts import layouts as my_layouts
 from groups import CustomGroups
-from theming import BlueyTheme
+from theming import BlueyTheme, EVA
 
 
-myTheme = BlueyTheme()
+myTheme = EVA()
 myTheme.apply_theme(qtile)
 myGroups = CustomGroups(myTheme.group_names, myTheme.group_labels)
 myKeys = CustomKeys()
