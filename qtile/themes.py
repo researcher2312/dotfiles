@@ -2,6 +2,10 @@ import abc, json, yaml
 import json
 
 
+def to_string(number):
+    return f"#{number}"
+
+
 class QtileTheme:
     def __init__(
         self,
@@ -35,6 +39,7 @@ class QtileTheme:
         defaults = dict(font="FiraCode Nerd Font", fontsize=12, padding=3, foreground=self.dark_colors["white"])
         qtile.config.widget_defaults = defaults
         qtile.config.extension_defaults = defaults.copy()
+        self.generate_alacritty_theme()
 
     def set_wallpaper(self, wallpaper):
         self.wallpaper_path = wallpaper
@@ -44,3 +49,25 @@ class QtileTheme:
         data = json.load(file)
         self.light_colors = data["light"]
         self.dark_colors = data["dark"]
+
+    def generate_alacritty_theme(self):
+        primary = {}
+        normal = {}
+        bright = {}
+        for key, value in self.dark_colors.items():
+            if key.find(' ') != -1:
+                bright[key.split(' ')[1]] = to_string(value)
+            elif key.find("ground") != -1:
+                primary[key] = to_string(value)
+        
+        for key, value in self.light_colors.items():
+            if key.find(' ') != -1 and key.find("ground") == -1:
+                normal[key] = to_string(value)
+        colors = {"colors": {"primary": primary, "normal": normal, "bright": bright}}
+        filename = "/home/researcher/.config/alacritty/" + self.name + ".yml"
+        with open(filename, "w") as file:
+            yaml.dump(colors, file)
+
+    def apply_alacritty_theme(self):
+        with open("../alacritty/alacritty.yml", "rw") as file:
+            config = yaml.safe_load(file)

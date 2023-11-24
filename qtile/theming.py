@@ -33,7 +33,7 @@ class BlueyTheme(QtileTheme):
 
 class EVA(QtileTheme):
     def __init__(self):
-        theme_path = os.path.expanduser("~/.config/palex/eva-color_palette.json")
+        theme_path = os.path.expanduser("~/.config/palex/nerv_wal-color_palette.json")
         wallpaper_path = os.path.expanduser("~/.config/wallpapers/nerv_wal.jpg")
         super().__init__(
             name="EVA",
