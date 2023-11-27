@@ -5,6 +5,7 @@ from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration
 from qtile_extras.popup.toolkit import PopupGridLayout, PopupText, PopupSlider
 from colortools import ColorGradient
+from nerdfonts import Nerdfonts as nfs
 
 
 class VolumePopup(PopupGridLayout):
@@ -78,27 +79,32 @@ class SlashBar(bar.Bar):
             **powerline
         )
         self.battery = widget.Battery(
-            format="\uf240  {percent:2.0%}",
+            format=nfs['battery'] + "  {percent:2.0%}",
             show_short_text=False,
             update_interval=60,
             background=gradient.get_color(),
             **powerline
         )
+        volume_color = gradient.get_color()
+        self.volume_text_widget = widget.PulseVolume(
+            fmt=" {}",
+            emoji=False,
+            background=volume_color,
+            **powerline,
+        )
         self.volume_widget = widget.PulseVolume(
-            fmt="{}",
             emoji=True,
             emoji_list=[
-                "\U000f0e08",  # volume_variant_off
-                "\U000f057f",  # volume_low
-                "\U000f0580",  # volume_medium
-                "\U000f057e",
-            ],  # volume_high
+                nfs["volume-variant-off"],
+                nfs["volume_low"],
+                nfs["volume_medium"],
+                nfs["volume_high"],
+            ],
             fontsize=18,
-            background=gradient.get_color(),
-            **powerline
+            background=volume_color,
         )
         self.clock = widget.Clock(
-            format="\U000f0954  %d/%m %a %H:%M", background=gradient.get_color(), **powerline
+            format=f"{nfs['clock']}  %d/%m %a %H:%M", background=gradient.get_color(), **powerline
         )
         widgets = [
             self.spacer,
@@ -109,6 +115,7 @@ class SlashBar(bar.Bar):
             self.battery,
             copy.copy(self.spacer),
             self.volume_widget,
+            self.volume_text_widget,
             copy.copy(self.spacer),
             self.clock,
             self.spacer2,
