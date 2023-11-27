@@ -55,13 +55,13 @@ class QtileTheme:
         normal = {}
         bright = {}
         for key, value in self.dark_colors.items():
-            if key.find(' ') != -1:
-                bright[key.split(' ')[1]] = to_string(value)
+            if key.find(' ') == -1:
+                bright[key] = to_string(value)
             elif key.find("ground") != -1:
                 primary[key] = to_string(value)
         
         for key, value in self.light_colors.items():
-            if key.find(' ') != -1 and key.find("ground") == -1:
+            if key.find(' ') == -1 and key.find("ground") == -1:
                 normal[key] = to_string(value)
         colors = {"colors": {"primary": primary, "normal": normal, "bright": bright}}
         filename = "/home/researcher/.config/alacritty/" + self.name + ".yml"
