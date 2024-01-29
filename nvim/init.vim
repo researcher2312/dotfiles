@@ -1,13 +1,14 @@
 call plug#begin()
 
 Plug 'nvim-lualine/lualine.nvim'
-Plug 'norcalli/nvim-colorizer.lua'
 Plug 'tanvirtin/monokai.nvim'
+Plug 'maxboisvert/vim-simple-complete'
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'nvim-tree/nvim-tree.lua'
+Plug 'bsuth/emacs-bindings.nvim'
 
 call plug#end()
 
-set termguicolors
-lua require'colorizer'.setup()
 lua require'lualine'.setup()
 lua require'monokai'.setup()
 
