@@ -28,5 +28,8 @@ set clipboard^=unnamed
 set laststatus=2
 set noshowmode
 
+:nmap <c-s> :w<CR>
+:imap <c-s> <Esc>:w<CR>a
+
 syntax on
 filetype indent on
