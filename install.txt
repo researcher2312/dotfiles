@@ -1,0 +1,69 @@
+# arch linux
+
+timedatectl set-timezone Europe/Warsaw
+
+fdisk /dev/sda
+n uefi +300M 
+n swap +512M
+n 23
+
+mkfs.ext4 /dev/sda3
+mkswap /dev/sda2
+mkfs.fat -F 32 /dev/sda1
+mount /dev/sda3 /mnt
+mount --mkdir /dev/sda1 /mnt/boot
+swapon /dev/sda2
+
+pacman-key --init
+pacman-key --populate
+
+pacstrap -K /mnt base linux linux-firmware neovim
+
+genfstab -L /mnt >> /mnt/etc/fstab
+arch-chroot /mnt
+ln -sf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+/!edit /etc/locale.gen
+locale-gen
+/!edit /etc/locale.conf
+LANG=pl_PL.UTF-8
+/!edit /etc/hostname
+hostname
+
+pacman -S sudo networkmanager git grub efibootmgr os-prober dosfstools mtools alacritty firefox connman fakeroot fish gnome-screenshot khal pipewire qtile rofi emacs rofi-calc light-locker dbus python base-devel python-pip xorg neofetch ttf-firacode-nerd btop man-db man-pages man-pages-pl noto-fonts-cjk noto-fonts-emoji noto-fonts tk lightdm light-locker lightdm-gtk-greeter conan syncthing yazi stow xdg-user-dirs
+
+//+graphics driver (xf86-video-fbdev -- vbox, xf86-video-intel vulkan-intel -- intel)
+
+passwd
+useradd -m researcher
+passwd researcher
+usermod -aG wheel,audio,video,optical,storage researcher
+visudo
+//%allow members of wheel group to execute any command
+
+grub-install --target=x86_64-efi --bootloader-id=grub_uefi --efi-directory=/boot --recheck
+grub-mkconfig -o /boot/grub/grub.cfg
+
+systemctl enable NetworkManager
+systemctl enable lightdm.service
+//systemctl enable vboxservice
+
+LC_ALL=C xdg-user-dirs-update --force
+
+exit
+umount -l /mnt
+shutdown now
+
+
+git clone https://github.com/researcher2312/dotfiles.git ./dotfiles
+
+stow dotfiles
+
+pip install psutil pulsectl pulsectl-asyncio dbus-next pyyaml black  --break-system-packages
+
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+
+yay -S picom-git empty qtile-extras
+
++nvim plug

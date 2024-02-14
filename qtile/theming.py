@@ -6,7 +6,7 @@ from colortools import ColorGradient
 
 class BlueyTheme(QtileTheme):
     def __init__(self):
-        theme_path = os.path.expanduser("~/.config/palex/arch_nz-color_palette.json")
+        theme_path = os.path.expanduser("~/.config/qtile/arch.json")
         wallpaper_path = os.path.expanduser("~/.config/wallpapers/arch_nz.png")
         super().__init__(
             name="Bluey",
