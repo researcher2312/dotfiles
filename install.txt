@@ -29,7 +29,7 @@ LANG=pl_PL.UTF-8
 /!edit /etc/hostname
 hostname
 
-pacman -S sudo networkmanager git grub efibootmgr os-prober dosfstools mtools alacritty firefox connman fakeroot fish gnome-screenshot khal pipewire qtile rofi emacs rofi-calc light-locker dbus python base-devel python-pip xorg neofetch ttf-firacode-nerd btop man-db man-pages man-pages-pl noto-fonts-cjk noto-fonts-emoji noto-fonts tk lightdm light-locker lightdm-gtk-greeter conan syncthing yazi stow xdg-user-dirs
+pacman -S sudo networkmanager git grub efibootmgr os-prober dosfstools mtools alacritty firefox connman fakeroot fish gnome-screenshot khal pipewire qtile rofi emacs rofi-calc light-locker dbus python base-devel python-pip xorg neofetch ttf-firacode-nerd btop man-db man-pages man-pages-pl noto-fonts-cjk noto-fonts-emoji noto-fonts tk lightdm light-locker lightdm-gtk-greeter conan syncthing yazi stow xdg-user-dirs zoxide
 
 //+graphics driver (xf86-video-fbdev -- vbox, xf86-video-intel vulkan-intel -- intel)
 
@@ -55,8 +55,8 @@ shutdown now
 
 
 git clone https://github.com/researcher2312/dotfiles.git ./dotfiles
-
-stow dotfiles
+cd dotfiles
+stow .
 
 pip install psutil pulsectl pulsectl-asyncio dbus-next pyyaml black  --break-system-packages
 
@@ -66,4 +66,5 @@ makepkg -si
 
 yay -S picom-git empty qtile-extras
 
-+nvim plug
+install nvim plug
+:PlugInstall
