@@ -3,4 +3,4 @@ if status is-interactive
 end
 
 alias emacs="emacs -nw"
-zoxide init fish | source
+zoxide init fish --cmd=cd | source

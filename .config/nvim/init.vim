@@ -6,15 +6,18 @@ Plug 'maxboisvert/vim-simple-complete'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'bsuth/emacs-bindings.nvim'
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 call plug#end()
 
 lua require'lualine'.setup()
 lua require'monokai'.setup()
+lua require'ibl'.setup()
 
 set number
 set tabstop=4
 set shiftwidth=4
+set colorcolumn=80
 set cindent
 set expandtab
 set showmatch

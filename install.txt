@@ -68,3 +68,5 @@ yay -S picom-git empty qtile-extras
 
 install nvim plug
 :PlugInstall
+
+(in tmux) ctrl-space I

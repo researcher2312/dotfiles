@@ -17,7 +17,7 @@ scrolling:
     multipiler: 3
 
 font:
-    size: 10.0
+    size: 14.0
     draw_bold_text_with_bright_colors: true
     normal:
         family: FiraCode Nerd Font
@@ -39,4 +39,8 @@ import:
     - ~/.config/alacritty/catpuchin.yml
 
 shell:
-    program: /usr/bin/fish
+  program: /bin/bash
+  args:
+    - -l
+    - -c
+    - "tmux attach || tmux"
