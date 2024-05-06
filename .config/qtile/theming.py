@@ -2,6 +2,7 @@ import os
 from themes import QtileTheme
 from widgets import ArrowBar, VolumePopup, SlashBar
 from colortools import ColorGradient
+from nerdfonts import Nerdfonts as nfs
 
 
 class BlueyTheme(QtileTheme):
@@ -15,15 +16,15 @@ class BlueyTheme(QtileTheme):
             wallpaper=wallpaper_path,
             group_names="123456ABC",
             group_labels=[
-                "\uf489",  # terminal
-                "\uf269",  # browser
-                "\U000f0ede",  # chat
-                "\ueaf0",  # files
-                "\ueb1c",  # mail
-                "\ueae9",  # code
-                "\U000f0beb",  # A letter
-                "\U000f0bee",  # B letter
-                "\U000f0bf1",  # C letter
+                nfs["terminal"],
+                nfs["browser"],
+                nfs["chat"],
+                nfs["files"],
+                nfs["mail"],
+                nfs["code"],
+                nfs["A_letter"],
+                nfs["B_letter"],
+                nfs["C_letter"],
             ],
         )
         gradient = ColorGradient(
@@ -33,7 +34,7 @@ class BlueyTheme(QtileTheme):
 
 class EVA(QtileTheme):
     def __init__(self):
-        theme_path = os.path.expanduser("~/.config/palex/nerv_wal-color_palette.json")
+        theme_path = os.path.expanduser("~/.config/qtile/nerv.json")
         wallpaper_path = os.path.expanduser("~/.config/wallpapers/nerv.png")
         super().__init__(
             name="EVA",

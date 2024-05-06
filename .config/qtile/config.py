@@ -34,7 +34,7 @@ from groups import CustomGroups
 from theming import BlueyTheme, EVA
 
 
-myTheme = EVA()
+myTheme = BlueyTheme()
 myTheme.apply_theme(qtile)
 myGroups = CustomGroups(myTheme.group_names, myTheme.group_labels)
 myKeys = CustomKeys()

@@ -39,7 +39,7 @@ import:
     - ~/.config/alacritty/catpuchin.yml
 
 shell:
-  program: /bin/bash
+  program: /bin/zsh
   args:
     - -l
     - -c

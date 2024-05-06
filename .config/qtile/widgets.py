@@ -191,7 +191,6 @@ class ArrowBar(bar.Bar):
             background=gradient.get_color(),
             **powerline
         )
-        self.wifi = widget.IWD(show_image=True, show_text=False)
         self.volume_widget = widget.PulseVolume(
             fmt="{}",
             emoji=True,
@@ -219,7 +218,6 @@ class ArrowBar(bar.Bar):
             self.pomodoro,
             self.cpu,
             self.memory,
-            self.wifi,
             self.battery,
             self.volume_widget,
             # self.volume_popup,
