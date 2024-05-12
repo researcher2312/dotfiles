@@ -23,4 +23,4 @@ plug "zsh-users/zsh-syntax-highlighting"
 alias cat="batcat --color=always"
 alias ls="eza --color=always --icons=always --long --git --no-filesize --no-permissions --no-time --no-user"
 
-eval "$(zoxide init zsh)"
+eval "$(zoxide init --cmd cd zsh)"
