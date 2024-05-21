@@ -5,7 +5,6 @@ background = "0x1f1f1f"
 foreground = "0xe5e1d8"
 
 [font]
-draw_bold_text_with_bright_colors = true
 size = 14.0
 
 [font.bold]
@@ -26,7 +25,6 @@ style = "Regular"
 
 [scrolling]
 history = 10000
-multipiler = 3
 
 [selection]
 save_to_clipboard = true

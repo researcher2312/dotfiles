@@ -23,4 +23,11 @@ plug "zsh-users/zsh-syntax-highlighting"
 alias cat="batcat --color=always"
 alias ls="eza --color=always --icons=always --long --git --no-filesize --no-permissions --no-time --no-user"
 
+#evaluate add-ons
 eval "$(zoxide init --cmd cd zsh)"
+
+#fastfetch
+COUNTER=$(pgrep -f zsh | wc -l);
+if [ $COUNTER -eq 2 ]; then
+    fastfetch
+fi
