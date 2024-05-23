@@ -1,9 +1,3 @@
-# history
-HISTSIZE=10000
-SAVEHIST=10000
-HISTDUP=erase
-HISTFILE=~/.cache/zsh/history
-
 # zinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
@@ -18,8 +12,20 @@ zinit light Aloxaf/fzf-tab
 
 # autocomplete
 autoload -Uz compinit
-compinit
-_comp_options+=(globdots)
+compinit -d ~/.local/share/zsh/.zcompdump
+
+# History
+HISTSIZE=10000
+HISTFILE="$HOME/.local/share/zsh/.zsh_history"
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
 
 # aliases
 alias vim="nvim"
