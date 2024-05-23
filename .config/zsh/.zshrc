@@ -1,4 +1,4 @@
-# zinit
+# Zinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
@@ -10,7 +10,7 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zap-zsh/zap-prompt
 zinit light Aloxaf/fzf-tab
 
-# autocomplete
+# Autocomplete
 autoload -Uz compinit
 compinit -d ~/.local/share/zsh/.zcompdump
 
@@ -27,7 +27,7 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-# aliases
+# Aliases
 alias vim="nvim"
 alias cat="batcat --color=always"
 alias ls="eza --color=always --icons=always --long --git --no-filesize --no-permissions --no-time --no-user"
@@ -37,11 +37,11 @@ alias cd....="cd ../../.."
 alias cd.....="cd ../../../.."
 alias cd......="cd ../../../../.."
 
-# evaluate add-ons
+# Evaluate add-ons
 #eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 
-# fastfetch
+# Fastfetch
 COUNTER=$(pgrep -f zsh | wc -l);
 if [ $COUNTER -eq 2 ]; then
     fastfetch
