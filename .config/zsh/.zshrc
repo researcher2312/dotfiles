@@ -41,8 +41,3 @@ alias cd......="cd ../../../../.."
 #eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 
-# Fastfetch
-COUNTER=$(pgrep -f zsh | wc -l);
-if [ $COUNTER -eq 2 ]; then
-    fastfetch
-fi
