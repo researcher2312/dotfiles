@@ -24,20 +24,25 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import os
-import subprocess
-from libqtile import layout, hook, qtile
-from libqtile.config import Match, Screen
 from keybindings import CustomKeys
 from layouts import layouts as my_layouts
 from groups import CustomGroups
+from screens import MonitorManager
 from theming import BlueyTheme, EVA
+from libqtile import layout, hook, qtile
+from libqtile.config import Match, Screen
+import subprocess
+import os
+
+
+from libqtile.log_utils import logger
 
 
 myTheme = BlueyTheme()
 myTheme.apply_theme(qtile)
 myGroups = CustomGroups(myTheme.group_names, myTheme.group_labels)
 myKeys = CustomKeys()
+myMonitors = MonitorManager()
 keys = myKeys.keys
 mouse = myKeys.mouse
 layouts = my_layouts
@@ -45,15 +50,9 @@ groups = myGroups.groups
 
 myGroups.extend_keys(myKeys)
 
+screens = myMonitors.init_screens(myTheme)
 
-screens = [
-    Screen(
-        top=myTheme.bar,
-        wallpaper=myTheme.wallpaper_path,
-        wallpaper_mode="fill",
-        # x11_drag_polling_rate = 60,
-    ),
-]
+logger.warning(f"screens {len(screens)}\n")
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
@@ -96,6 +95,8 @@ def autostart():
 
 @hook.subscribe.startup
 def _():
+    logger.warning(f"screen0 {screens[0].width}\n")
+    logger.warning(f"screen1 {screens[1].width}\n")
     myTheme.bar.window.window.set_property(
         name="WM_NAME", value="QTILE_BAR", type="STRING", format=8
     )

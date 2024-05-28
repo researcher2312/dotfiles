@@ -7,6 +7,12 @@ from qtile_extras.popup.toolkit import PopupGridLayout, PopupText, PopupSlider
 from colortools import ColorGradient
 from nerdfonts import Nerdfonts as nfs
 
+from libqtile.log_utils import logger
+
+
+def popup_info(number):
+    logger.warning("pressed" + str(number))
+
 
 class VolumePopup(PopupGridLayout):
     def __init__(self, qtile):
@@ -26,6 +32,7 @@ class VolumePopup(PopupGridLayout):
                     max_value=100,
                     marker_size=0,
                     bar_size=10,
+                    drag_callback=popup_info,
                     name="volume",
                 ),
                 PopupText(col=0, row=1, h_align="center", text="Brightness"),
@@ -35,6 +42,7 @@ class VolumePopup(PopupGridLayout):
                     max_value=100,
                     marker_size=0,
                     bar_size=10,
+                    drag_callback=popup_info,
                     name="brightness",
                 ),
             ],
@@ -198,13 +206,13 @@ class ArrowBar(bar.Bar):
                 "\U000f0e08",  # volume_variant_off
                 "\U000f057f",  # volume_low
                 "\U000f0580",  # volume_medium
-                "\U000f057e",
-            ],  # volume_high
+                "\U000f057e",  # volume_high
+            ],
             fontsize=18,
             background=gradient.get_color(),
             **powerline
         )
-        # self.volume_popup = widget.PulseVolumeExtra(mode="popup")
+        self.volume_popup = widget.PulseVolumeExtra(mode="popup")
         self.clock = widget.Clock(
             format="\U000f0954  %d/%m %a %H:%M", background=gradient.get_color()
         )
@@ -220,10 +228,10 @@ class ArrowBar(bar.Bar):
             self.memory,
             self.battery,
             self.volume_widget,
-            # self.volume_popup,
+            self.volume_popup,
             self.clock,
         ]
         super().__init__(widgets, 25, background="#00000000", margin=[5, 5, 1, 5])
 
     def get_volume(self):
-        return self.volume_widget.get_volume()
+        return self.volume_widget.volume

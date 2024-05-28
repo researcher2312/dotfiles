@@ -1,5 +1,5 @@
 import abc, json, yaml
-import json
+import json, copy
 
 
 def to_string(number):
@@ -25,6 +25,7 @@ class QtileTheme:
         self.dark_colors = {}
         self.load_colors(theme)
         self.status_bar = None
+        self.bar_copies = 0
         self.status_popup = None
         if group_names == None:
             self.group_names = "123456789"
@@ -34,6 +35,13 @@ class QtileTheme:
             self.group_labels = "123456789"
         else:
             self.group_labels = group_labels
+
+    def get_bar(self):
+        if self.bar_copies > 0:
+            return copy.deepcopy(self.bar)
+        else:
+            self.bar_copies = 1
+            return self.bar
 
     def apply_theme(self, qtile):
         defaults = dict(font="FiraCode Nerd Font", fontsize=12, padding=3, foreground=self.dark_colors["white"])

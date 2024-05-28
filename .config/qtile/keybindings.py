@@ -8,7 +8,7 @@ class CustomKeys:
     def __init__(self):
         self.mod = "mod4"
         mod = self.mod
-        terminal = guess_terminal()
+        terminal = 'kitty --hold zsh -c "fastfetch"'
         wifi_path = os.path.expanduser("~/.config/rofi/rofi-wifi-menu.sh")
         self.keys = [
             # A list of available commands that can be bound to keys can be found
@@ -72,6 +72,7 @@ class CustomKeys:
                 desc="Toggle between split and unsplit sides of stack",
             ),
             Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+            Key(["mod1"], "Tab", lazy.screen.toggle_group(), desc="Toggle last group"),
             # Toggle between different layouts as defined below
             Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
             Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
@@ -104,10 +105,10 @@ class CustomKeys:
                 desc="Launch calculator",
             ),
             Key(
-                [mod, "shift"],
-                "x",
-                lazy.spawn("light-locker-command -l"),
-                desc="lock screen",
+                [mod],
+                "s",
+                lazy.spawn("systemctl suspend"),
+                desc="suspend system",
             ),
             Key(
                 [],
