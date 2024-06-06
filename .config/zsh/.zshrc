@@ -40,4 +40,5 @@ alias cd......="cd ../../../../.."
 # Evaluate add-ons
 #eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 

@@ -17,7 +17,7 @@ swapon /dev/sda2
 pacman-key --init
 pacman-key --populate
 
-pacstrap -K /mnt base linux linux-firmware neovim
+pacstrap -K /mnt base linux linux-firmware vim
 
 genfstab -L /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
@@ -27,9 +27,9 @@ locale-gen
 /!edit /etc/locale.conf
 LANG=pl_PL.UTF-8
 /!edit /etc/hostname
-hostname
+echo "hostname" > /etc/hostname
 
-pacman -S sudo networkmanager git grub efibootmgr os-prober dosfstools mtools alacritty firefox connman fakeroot fish gnome-screenshot khal pipewire qtile rofi emacs rofi-calc light-locker dbus python base-devel python-pip xorg neofetch ttf-firacode-nerd btop man-db man-pages man-pages-pl noto-fonts-cjk noto-fonts-emoji noto-fonts tk lightdm light-locker lightdm-gtk-greeter conan syncthing yazi stow xdg-user-dirs zoxide
+pacman -S sudo base-devel fakeroot networkmanager git grub efibootmgr os-prober dosfstools mtools alacritty zsh pipewire qtile rofi rofi-calc dbus python python-pip xorg btop man-db man-pages man-pages-pl ttf-firacode-nerd noto-fonts-cjk noto-fonts-emoji noto-fonts tk lightdm light-locker lightdm-gtk-greeter conan syncthing yazi stow xdg-user-dirs zoxide fzf eza bat helix fastfetch firefox
 
 //+graphics driver (xf86-video-fbdev -- vbox, xf86-video-intel vulkan-intel -- intel)
 
@@ -66,7 +66,3 @@ makepkg -si
 
 yay -S picom-git empty qtile-extras
 
-install nvim plug
-:PlugInstall
-
-(in tmux) ctrl-space I

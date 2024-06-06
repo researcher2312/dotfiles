@@ -1,7 +1,16 @@
 theme = "monokai-transparent"
 
+[editor]
+rulers = [80, 120]
+
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"
 select = "underline"
 
+[keys.insert]
+C-s = ":w"
+
+[editor.indent-guides]
+render = true
+character = "╎"

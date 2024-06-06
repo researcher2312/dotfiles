@@ -5,7 +5,7 @@ My apps:
 - terminal: Kitty
 - window manager: QTile + extras
 - shell: zsh
-- text editor: nvim
+- text editor: helix
 - resource monitor: btop
 - compositor: picom
 - login manager: LightDM
