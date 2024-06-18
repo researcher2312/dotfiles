@@ -9,8 +9,25 @@ normal = "block"
 select = "underline"
 
 [keys.insert]
-C-s = ":w"
+"C-s" = ":w"
+"C-a" = "goto_line_start"
+"C-e" = "goto_line_end"
+"C-p" = "move_visual_line_up"
+"C-n" = "move_visual_line_down"
+"C-b" = "move_char_left"
+"C-f" = "move_char_right"
+"C-k" = ["extend_line_below", "delete_selection", "move_visual_line_up", "paste_before", "move_visual_line_up"]
+"C-j" = ["extend_line_below", "delete_selection", "paste_after", "move_visual_line_down"]
 
 [editor.indent-guides]
 render = true
-character = "╎"
+character = "|"
+skip-levels = 1
+
+[editor.statusline]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.lsp]
+display-messages = true

@@ -7,7 +7,6 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
-zinit light zap-zsh/zap-prompt
 zinit light Aloxaf/fzf-tab
 
 # Autocomplete
@@ -41,4 +40,5 @@ alias cd......="cd ../../../../.."
 #eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/config.toml)"
 
