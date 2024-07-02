@@ -26,9 +26,10 @@ skip-levels = 1
 
 [editor.statusline]
 left = ["mode", "spinner", "file-name", "file-modification-indicator", 
-        "read-only-indicator", "file-type"]
-center = ["version-control"]
-right = ["position", "position-percentage"]
+        "read-only-indicator"]
+center = ["diagnostics", "register"]
+right = ["version-control", "file-type", "file-encoding",
+         "separator", "position", "position-percentage", "total-line-numbers"]
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
 mode.select = "SELECT"
