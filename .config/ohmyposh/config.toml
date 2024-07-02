@@ -20,7 +20,13 @@ final_space = true
     template = '<#ffffff>in</> {{ .Path }} '
 
     [blocks.segments.properties]
-      style = 'folder'
+      style = 'unique'
+      home_icon = ''
+
+        [blocks.segments.properties.mapped_locations]
+        '~/mhome' = ''
+        '~/dotfiles' = '󱗼'
+        '~/Music' = ''
 
   [[blocks.segments]]
     type = 'git'
@@ -43,6 +49,14 @@ final_space = true
     foreground = 'lightGreen'
     template = '❯'
 
+[[blocks]]
+  type = 'rprompt'
+  alignment = 'right'
+
+  [[blocks.segments]]
+    type = 'executiontime'
+    style = 'plain'
+    foreground = 'red'
 
 [transient_prompt]
   foreground = 'lightGreen'
