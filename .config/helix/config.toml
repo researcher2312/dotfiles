@@ -25,6 +25,10 @@ character = "|"
 skip-levels = 1
 
 [editor.statusline]
+left = ["mode", "spinner", "file-name", "file-modification-indicator", 
+        "read-only-indicator", "file-type"]
+center = ["version-control"]
+right = ["position", "position-percentage"]
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
 mode.select = "SELECT"
