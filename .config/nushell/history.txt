@@ -1,0 +1,31 @@
+deb [trusted=yes] https://apt.fury.io/rsteube/ /
+exit
+ps
+ls
+cd rustlings
+rustlings run next
+rustlings hint functions1
+rustlings run next
+rustlings verify
+rustlings run next
+rustlings list
+rustlings run next
+rustlings lsp
+ls
+pwd
+config nu
+d
+cd
+ls
+hx .config/nushell/config.nu
+hx .config/nushell/env.nu
+hx .config/nushell/config.nu
+config nu
+hx .config/nushell/config.nu
+exit
+hx .config/nushell/config.nu
+cd
+hx .config/nushell/config.nu
+exit
+config nu
+exit
