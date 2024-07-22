@@ -27,6 +27,7 @@ final_space = true
         '~/mhome' = ''
         '~/dotfiles' = '󱗼'
         '~/Music' = ''
+        '~/Downloads' = '󰇚'
 
   [[blocks.segments]]
     type = 'git'
