@@ -1,0 +1,3 @@
+set icons true
+set shell zsh
+set preview false
