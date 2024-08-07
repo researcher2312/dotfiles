@@ -1,12 +1,11 @@
 local wezterm = require 'wezterm'
-
 local config = wezterm.config_builder()
 
 config.color_scheme = 'Monokai Remastered'
 config.window_background_opacity = 0.8
 config.font = wezterm.font 'Fira Code Nerdfont'
 
-config.skip_close_confirmation_for_processes_named = {'zellij', 'zsh'}
+config.skip_close_confirmation_for_processes_named = {'zsh'}
 
 wezterm.on('increase-opacity', function(window, pane)
   local overrides = {}
@@ -20,9 +19,8 @@ wezterm.on('decrease-opacity', function(window, pane)
   window:set_config_overrides(overrides)
 end)
 
+config.leader = { key = 'Space', mods = 'CTRL', timeout_milliseconds = 1000 }
 config.keys = {
-  -- CTRL+SHIFT+Space, followed by 'r' will put us in resize-pane
-  -- mode until we cancel that mode.
   {
     key = 'u',
     mods = 'ALT',
@@ -32,6 +30,36 @@ config.keys = {
     key = 'd',
     mods = 'ALT',
     action = wezterm.action.EmitEvent 'decrease-opacity',
+  },
+  {
+    key = "\\",
+    mods = 'LEADER',
+    action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
+  },
+  {
+    key = '-',
+    mods = 'LEADER',
+    action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
+  },
+  {
+    key = 'h',
+    mods = 'ALT',
+    action = wezterm.action.ActivatePaneDirection "Left",
+  },
+  {
+    key = 'j',
+    mods = 'ALT',
+    action = wezterm.action.ActivatePaneDirection "Down",
+  },
+  {
+    key = 'k',
+    mods = 'ALT',
+    action = wezterm.action.ActivatePaneDirection "Up",
+  },
+  {
+    key = 'l',
+    mods = 'ALT',
+    action = wezterm.action.ActivatePaneDirection "Right",
   },
 }
 
