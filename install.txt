@@ -29,7 +29,7 @@ LANG=pl_PL.UTF-8
 /!edit /etc/hostname
 echo "hostname" > /etc/hostname
 
-pacman -S sudo base-devel git fakeroot networkmanager grub efibootmgr os-prober dosfstools mtools zsh nushell  kitty rofi dbus python python-pip python-psutil python-pulsectl python-pulsectl-asyncio python-dbus-next python-pyyaml python-pipx conan xorg pipewire qtile btop man-db man-pages man-pages-pl ttf-firacode-nerd noto-fonts-cjk noto-fonts-emoji noto-fonts tk lightdm light-locker lightdm-gtk-greeter conan stow xdg-user-dirs zoxide fzf eza bat helix fastfetch firefox rust-analyzer pylsp clangd
+pacman -S sudo base-devel git fakeroot networkmanager grub efibootmgr os-prober dosfstools mtools zsh nushell  kitty rofi dbus python python-pip python-psutil python-pulsectl python-pulsectl-asyncio python-dbus-next python-pyyaml python-pipx conan xorg pipewire qtile btop man-db man-pages man-pages-pl ttf-firacode-nerd noto-fonts-cjk noto-fonts-emoji noto-fonts tk lightdm light-locker lightdm-gtk-greeter conan stow xdg-user-dirs zoxide fzf eza bat helix fastfetch direnv firefox rust-analyzer pylsp clangd
 
 //+graphics driver (xf86-video-fbdev -- vbox, xf86-video-intel vulkan-intel -- intel)
 
@@ -61,5 +61,5 @@ git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
 
-yay -S picom-git empty qtile-extras carapace-bin
+yay -S picom-git empty qtile-extras carapace-bin oh-my-posh
 
