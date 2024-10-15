@@ -4,8 +4,11 @@ import subprocess
 import json
 import re
 
+
 class Monitor:
-    def __init__(self, name, x, y, resolution_x, resolution_y, shift_x, shift_y, primary):
+    def __init__(
+        self, name, x, y, resolution_x, resolution_y, shift_x, shift_y, primary
+    ):
         self.name = name
         self.x = x
         self.y = y
@@ -25,19 +28,21 @@ class MonitorManager:
 
     def parse_monitors(self):
         monitors = []
-        output = subprocess.getoutput("xrandr --listmonitors").split('\n')
+        output = subprocess.getoutput("xrandr --listmonitors").split("\n")
         monitor_parameters = [re.split("\\+|x|/| ", i) for i in output[1:]]
         for parameters in monitor_parameters:
-            (_, _, _, primary, res_x, x, res_y, y, shift_x, shift_y, _, name) = parameters
-            primary = '*' in primary
-            monitors.append(Monitor(name, x, y, res_x, res_y, shift_x, shift_y, primary))
+            (_, _, _, primary, res_x, x, res_y, y, shift_x, shift_y, _, name) = (
+                parameters
+            )
+            primary = "*" in primary
+            monitors.append(
+                Monitor(name, x, y, res_x, res_y, shift_x, shift_y, primary)
+            )
         self.monitors = monitors
 
     def save_monitors(self):
         with open("~/monitors.json", "w+t") as file:
             json.dump(file, self.monitors, default=vars)
-
-
 
     def init_screens(self, theme):
         for _ in range(self.monitors_count):

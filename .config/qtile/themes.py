@@ -38,16 +38,22 @@ class QtileTheme:
 
     def get_bar(self):
         if self.bar_copies > 0:
-            return copy.deepcopy(self.bar)
+            return self.bar
+            #return copy.deepcopy(self.bar)
         else:
             self.bar_copies = 1
             return self.bar
 
     def apply_theme(self, qtile):
-        defaults = dict(font="FiraCode Nerd Font", fontsize=12, padding=3, foreground=self.dark_colors["white"])
-        qtile.config.widget_defaults = defaults
-        qtile.config.extension_defaults = defaults.copy()
-        self.generate_alacritty_theme()
+        defaults = dict(
+            font="FiraCode Nerd Font",
+            fontsize=12,
+            padding=3,
+            foreground=self.dark_colors["white"],
+        )
+        #qtile.config.widget_defaults = defaults
+        #qtile.config.extension_defaults = defaults.copy()
+        # self.generate_alacritty_theme()
 
     def set_wallpaper(self, wallpaper):
         self.wallpaper_path = wallpaper
@@ -63,13 +69,13 @@ class QtileTheme:
         normal = {}
         bright = {}
         for key, value in self.dark_colors.items():
-            if key.find(' ') == -1:
+            if key.find(" ") == -1:
                 bright[key] = to_string(value)
             elif key.find("ground") != -1:
                 primary[key] = to_string(value)
-        
+
         for key, value in self.light_colors.items():
-            if key.find(' ') == -1 and key.find("ground") == -1:
+            if key.find(" ") == -1 and key.find("ground") == -1:
                 normal[key] = to_string(value)
         colors = {"colors": {"primary": primary, "normal": normal, "bright": bright}}
         filename = "/home/researcher/.config/alacritty/" + self.name + ".yml"

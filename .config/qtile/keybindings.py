@@ -8,7 +8,7 @@ class CustomKeys:
     def __init__(self):
         self.mod = "mod4"
         mod = self.mod
-        terminal = 'kitty --hold zsh -c "fastfetch"'
+        terminal = 'wezterm'
         wifi_path = os.path.expanduser("~/.config/rofi/rofi-wifi-menu.sh")
         self.keys = [
             # A list of available commands that can be bound to keys can be found
@@ -100,7 +100,7 @@ class CustomKeys:
             Key([mod], "i", lazy.spawn(wifi_path), desc="Launch network selector"),
             Key(
                 [mod],
-                "c",
+                "k",
                 lazy.spawn("rofi -show calc -modi calc -no-show-match -no-sort"),
                 desc="Launch calculator",
             ),
