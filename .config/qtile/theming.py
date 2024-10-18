@@ -8,7 +8,7 @@ from nerdfonts import Nerdfonts as nfs
 class BlueyTheme(QtileTheme):
     def __init__(self):
         theme_path = os.path.expanduser("~/.config/qtile/arch.json")
-        wallpaper_path = os.path.expanduser("~/.config/wallpapers/arch_nz.png")
+        wallpaper_path = os.path.expanduser("~/wallpapers/arch_nz.png")
         super().__init__(
             name="Bluey",
             theme=theme_path,
@@ -35,7 +35,7 @@ class BlueyTheme(QtileTheme):
 class EVA(QtileTheme):
     def __init__(self):
         theme_path = os.path.expanduser("~/.config/qtile/nerv.json")
-        wallpaper_path = os.path.expanduser("~/.config/wallpapers/nerv.png")
+        wallpaper_path = os.path.expanduser("~wallpapers/nerv.png")
         super().__init__(
             name="EVA",
             font="FiraCode Nerd Font",

@@ -2,7 +2,7 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 local act = wezterm.action
 
-config.color_scheme = 'Monokai Dark (Gogh)'
+config.color_scheme = 'Monokai Pro (Gogh)'
 config.window_background_opacity = 0.8
 config.font = wezterm.font 'Cascadia Code'
 config.hide_tab_bar_if_only_one_tab = true
@@ -39,6 +39,10 @@ config.keys = {
   {key = 'j', mods = 'ALT', action = act.ActivatePaneDirection "Down"},
   {key = 'k', mods = 'ALT', action = act.ActivatePaneDirection "Up"},
   {key = 'l', mods = 'ALT', action = act.ActivatePaneDirection "Right"},
+
+  {key= 'h', mods = 'ALT|SHIFT', action = act.RotatePanes 'CounterClockwise'},
+  {key= 'l', mods = 'ALT|SHIFT', action = act.RotatePanes 'Clockwise'},
+
   {key = 'K', mods = 'CTRL|SHIFT', action = act.ClearScrollback 'ScrollbackAndViewport'},
 }
 
