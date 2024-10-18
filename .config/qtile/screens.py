@@ -1,5 +1,6 @@
 from libqtile.config import Screen
 from libqtile.log_utils import logger
+from platform import uname
 import subprocess
 import json
 import re
@@ -18,15 +19,26 @@ class Monitor:
         self.shift_y = shift_y
         self.primary = primary
 
+    def __eq__(self, other):
+        return (
+            self.name == other.name
+            and self.resulution_x == other.resolution_x
+            and self.resolution_y == other.resolution_y
+        )
 
-class MonitorManager:
-    def __init__(self):
+    def __str__(self):
+        return (
+            f"{self.name} screen, {self.resolution_x}x{self.resolution_y} "
+            f"on [{self.shift_x}, {self.shift_y}], primary: {self.primary}"
+        )
+
+
+class MonitorSetup:
+    def __init__(self, name):
         self.monitors = []
-        self.parse_monitors()
-        self.monitors_count = len(self.monitors)
-        self.screens = []
+        self.name = name
 
-    def parse_monitors(self):
+    def parse_current_monitors(self):
         monitors = []
         output = subprocess.getoutput("xrandr --listmonitors").split("\n")
         monitor_parameters = [re.split("\\+|x|/| ", i) for i in output[1:]]
@@ -40,9 +52,44 @@ class MonitorManager:
             )
         self.monitors = monitors
 
-    def save_monitors(self):
-        with open("~/monitors.json", "w+t") as file:
-            json.dump(file, self.monitors, default=vars)
+    def has_same_monitors(self, other):
+        if len(self.monitors) != len(other.monitors):
+            return False
+        for monitor in self.monitors:
+            if monitor not in other.monitors:
+                return False
+        return True
+
+    def __str__(self):
+        result = f"{self.name}:\n"
+        for monitor in self.monitors:
+            result += str(monitor) + '\n'
+        return result
+
+
+class MonitorManager:
+    def __init__(self):
+        self.all_monitor_setups = []
+        self.current_monitor_setup = MonitorSetup(uname()[1])
+        self.current_monitor_setup.parse_current_monitors()
+        if not self.load_saved_setup():
+            self.all_monitor_setups.append(self.current_monitor_setup)
+            
+
+    def load_saved_setup(self):
+        for setup in self.all_monitor_setups:
+            if self.current_monitor_setup.has_same_monitors(setup):
+                self.current_monitor_setup = setup
+                return True
+        return False
+                
+    def save_setups(self):
+        with open("monitors.json", "w+t") as file:
+            json.dump(self.all_monitor_setups, file, default=vars)
+
+    def load_setups(self):
+        with open("monitors.json", "wt") as file:
+            json.load(self.all_monitor_setups, file, default=vars)
 
     def init_screens(self, theme):
         for _ in range(self.monitors_count):
