@@ -1,9 +1,10 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
+local act = wezterm.action
 
-config.color_scheme = 'Monokai Remastered'
+config.color_scheme = 'Monokai Dark (Gogh)'
 config.window_background_opacity = 0.8
-config.font = wezterm.font 'Fira Code Nerdfont'
+config.font = wezterm.font 'Cascadia Code'
 config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = false
 config.audible_bell = "Disabled"
@@ -34,10 +35,11 @@ config.keys = {
   {key = "\\", mods = 'LEADER', action = wezterm.action.SplitHorizontal {domain = 'CurrentPaneDomain'},},
   {key = '-', mods = 'LEADER', action = wezterm.action.SplitVertical {domain = 'CurrentPaneDomain'},},
   
-  {key = 'h', mods = 'ALT', action = wezterm.action.ActivatePaneDirection "Left"},
-  {key = 'j', mods = 'ALT', action = wezterm.action.ActivatePaneDirection "Down"},
-  {key = 'k', mods = 'ALT', action = wezterm.action.ActivatePaneDirection "Up"},
-  {key = 'l', mods = 'ALT', action = wezterm.action.ActivatePaneDirection "Right"},
+  {key = 'h', mods = 'ALT', action = act.ActivatePaneDirection "Left"},
+  {key = 'j', mods = 'ALT', action = act.ActivatePaneDirection "Down"},
+  {key = 'k', mods = 'ALT', action = act.ActivatePaneDirection "Up"},
+  {key = 'l', mods = 'ALT', action = act.ActivatePaneDirection "Right"},
+  {key = 'K', mods = 'CTRL|SHIFT', action = act.ClearScrollback 'ScrollbackAndViewport'},
 }
 
 return config
