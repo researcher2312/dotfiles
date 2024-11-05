@@ -27,6 +27,10 @@ wezterm.on('decrease-opacity', function(window, pane)
   window:set_config_overrides(overrides)
 end)
 
+--wezterm.on('clear-all-panes', function(window, pane)
+ -- for pane in window:active_tab():panes() do
+    
+
 config.leader = { key = 'Space', mods = 'CTRL', timeout_milliseconds = 1000 }
 config.keys = {
   {key = 'u', mods = 'ALT', action = wezterm.action.EmitEvent 'increase-opacity'},

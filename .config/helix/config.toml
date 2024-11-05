@@ -40,3 +40,6 @@ mode.select = "SELECT"
 
 [editor.lsp]
 display-messages = true
+
+[editor.soft-wrap]
+enable = true
