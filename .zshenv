@@ -12,6 +12,9 @@ export PATH="$PATH":"$HOME/.pub-cache/bin"
 export PATH="$PATH":"$HOME/.local/bin"
 export PATH="$CARGO_HOME"/bin:$PATH
 
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+
 export EDITOR=hx
 skip_global_compinit=1
 . "$HOME/.cargo/env"

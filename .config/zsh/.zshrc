@@ -46,6 +46,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/config.toml)"
 eval "$(direnv hook zsh)"
 eval "$(atuin init zsh)"
+eval "$(pyenv init -)"
 
 # Run only on first command
 [[ "$(pidof zsh)" == *' '* ]] || fastfetch
