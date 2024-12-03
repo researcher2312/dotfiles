@@ -50,9 +50,10 @@ groups = myGroups.groups
 
 myGroups.extend_keys(myKeys)
 
-screens = myMonitors.init_screens(myTheme)
+#screens = myMonitors.init_screens(myTheme)
+screens = [Screen(top=myTheme.bar, wallpaper=myTheme.wallpaper_path, wallpaper_mode="fill")]
 
-logger.warning(f"screens {len(screens)}\n")
+# logger.warning(f"screens {len(screens)}\n")
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
