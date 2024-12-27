@@ -9,3 +9,8 @@ plugins.pyls_mypy.live_mode = true
 [language.formatter]
 command = "black"
 args = ["--line-length", "88", "--quiet", "-"]
+
+[[language]]
+name="rust"
+formatter = { command = "rustfmt" }
+auto-format = true
