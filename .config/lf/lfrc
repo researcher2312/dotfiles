@@ -1,3 +1,3 @@
 set icons true
 set shell zsh
-set preview false
+set preview true

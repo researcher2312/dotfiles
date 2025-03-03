@@ -8,6 +8,7 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
+zinit light atuinsh/atuin
 
 # Autocomplete
 autoload -Uz compinit
@@ -36,12 +37,15 @@ alias cd....="cd ../../.."
 alias cd.....="cd ../../../.."
 alias cd......="cd ../../../../.."
 
+# Functions
+function mkcdir() { mkdir -p "$1"; cd "$1" }
 # Evaluate add-ons
 #eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/config.toml)"
 eval "$(direnv hook zsh)"
+eval "$(atuin init zsh)"
 
 # Run only on first command
 [[ "$(pidof zsh)" == *' '* ]] || fastfetch
