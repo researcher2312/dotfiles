@@ -1,0 +1,16 @@
+dialect = "uk"
+update_check = true
+style = "compact"
+invert = false
+store_failed = false
+inline_height = 20
+show_preview = true
+
+common_prefix = ["sudo"]
+ignored_commands = [
+	"cd",
+	"ls",
+	"vi",
+	"apt"
+]
+
