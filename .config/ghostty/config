@@ -1,0 +1,14 @@
+font-family = Agave
+theme = Monokai Classic
+command = nu
+background-opacity = 0.8
+
+keybind = ctrl+shift+k=clear_screen
+
+keybind = alt+h=goto_split:left
+keybind = alt+j=goto_split:down
+keybind = alt+k=goto_split:up
+keybind = alt+l=goto_split:right
+
+keybind = ctrl+shift+s=new_split:auto
+
