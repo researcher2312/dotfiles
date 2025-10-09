@@ -1,0 +1,56 @@
+theme = "monokai"
+hide-cursor-when-typing = true
+confirm-before-quit = false
+
+
+[editor]
+program = "helix"
+
+[window]
+mode = "Maximized"
+opacity = 0.8
+blur = false
+decorations = "Disabled"
+
+[cursor]
+shape = "block"
+
+[keyboard]
+use-kitty-keyboard-protocol = false
+disable-ctlseqs-alt = false
+
+[fonts]
+size = 20
+
+[fonts.regular]
+family = "FiraCode Nerd Font"
+style = "Normal"
+weight = 400
+#
+[fonts.bold]
+family = "FiraCode Nerd Font"
+style = "Normal"
+weight = 800
+#
+[fonts.italic]
+family = "FiraCode Nerd Font"
+style = "Italic"
+weight = 400
+#
+[fonts.bold-italic]
+family = "FiraCode Nerd Font"
+style = "Italic"
+weight = 800
+
+
+[navigation]
+mode = "Plain"
+
+
+[bindings]
+keys = [
+  { key = "q", with = "alt", action = "Quit" },
+  { key = "k", with = "control", action = "OpenConfigEditor" }
+]
+
+
